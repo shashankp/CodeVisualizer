@@ -43,9 +43,7 @@
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
-
-   
-
+    
     <telerik:RadTreeMap x:Name="treeMap1"
 						ItemsSource="{Binding}"
 						LayoutStrategy="Squarified"

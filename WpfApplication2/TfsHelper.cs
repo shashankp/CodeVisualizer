@@ -52,11 +52,13 @@ namespace WpfApplication2
             if (Directory.Exists(slnPath))
             {
                 //TODO: limited file types to cs
-                files = Directory.GetFiles(slnPath, "*.cs", SearchOption.AllDirectories).ToList();
+                files = Directory.GetFiles(Path.GetDirectoryName(slnPath), "*.cs", SearchOption.AllDirectories).ToList();
             }
-            else if (File.Exists(slnPath))
+
+            if (File.Exists(slnPath))
             {
-                files.Add(slnPath);
+                //files.Add(slnPath);
+                GenerateCodeMetrics(slnPath);
             }
 
             data.Clear();
@@ -78,6 +80,11 @@ namespace WpfApplication2
             });
 
             return data;
+        }
+
+        private static void GenerateCodeMetrics(string slnPath)
+        {
+
         }
 
         public static List<TfsItemViewModel> GetData()
