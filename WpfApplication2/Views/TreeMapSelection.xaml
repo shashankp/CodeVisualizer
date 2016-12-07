@@ -10,15 +10,41 @@
 
     <UserControl.Resources>
         <SolidColorBrush Color="#FFE10000" x:Key="HighPriority" />
-        <SolidColorBrush Color="#FF0C6BBF" x:Key="MedPriority" />
-        <SolidColorBrush Color="YellowGreen" x:Key="LowPriority" />
+        <SolidColorBrush Color="#FFFFE100" x:Key="MedPriority" />
+        <SolidColorBrush Color="#FF0C6BBF" x:Key="LowPriority" />
 
         <telerik:RangeBrushCollection x:Key="ColorizerBrushes">
             <telerik:RangeBrush Brush="{StaticResource LowPriority}" From="0" To="2" />
             <telerik:RangeBrush Brush="{StaticResource MedPriority}" From="3" To="5" />
             <telerik:RangeBrush Brush="{StaticResource HighPriority}" From="6" To="100"  />
         </telerik:RangeBrushCollection>
+
+        <DataTemplate x:Key="ToolTipTemplate">
+            <Grid>
+                <Rectangle Stroke="#828282" RadiusX="4" RadiusY="4" Fill="#F5F5F5"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap"  FontWeight="Bold" />
+                </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <TextBlock Text="Score: " />
+                    <TextBlock Text="{Binding Score}" TextWrapping="Wrap" />
+                </StackPanel>
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <TextBlock Text="BugCount: " />
+                    <TextBlock Text="{Binding BugCount}" />
+                </StackPanel>
+                </Grid>
+            </Grid>
+        </DataTemplate>
     </UserControl.Resources>
+
+   
 
     <telerik:RadTreeMap x:Name="treeMap1"
 						ItemsSource="{Binding}"
@@ -29,9 +55,13 @@
             <telerik:TypeDefinition TargetTypeName="TfsItemViewModel"
 									ValuePath="Size"
 									LabelPath="Name"
-									ToolTipPath="BugCount"
-                                    ToolTipFormat="Score: {0}">
+                                    ToolTipTemplate="{StaticResource ToolTipTemplate}">
                 <telerik:TypeDefinition.Mappings>
+                    <!--<telerik:ValueGradientColorizer RangeMinimum="0" RangeMaximum="20" ValuePath="BugCount">
+                        <GradientStop Offset="0" Color="#FFFFD000" />
+                        <GradientStop Offset="0.50" Color="#FFD11010" />
+                        <GradientStop Offset="1" Color="#de290b" />
+                    </telerik:ValueGradientColorizer>-->
                     <telerik:ValueBrushColorizer IsAbsolute="True" ValuePath="BugCount"
                                                      RangeMinimum="0" RangeMaximum="100"
                                                      Brushes="{StaticResource ColorizerBrushes}" />
