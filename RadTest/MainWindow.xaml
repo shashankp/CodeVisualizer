@@ -1,0 +1,30 @@
+﻿<Window xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"  x:Class="RadTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RadTest"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <telerik:RadTreeMap x:Name="treeMap1"
+						ItemsSource="{Binding}"
+						LayoutStrategy="Squarified"
+						BorderThickness="1"
+						BorderBrush="#FF5F031C">
+        <telerik:RadTreeMap.TypeDefinitions>
+            <telerik:TypeDefinition TargetTypeName="TfsItem"
+									ValuePath="Score"
+									LabelPath="Name"
+									ToolTipPath="Name">
+                <telerik:TypeDefinition.Mappings>
+                    <telerik:ValueGradientColorizer RangeMinimum="318" RangeMaximum="5310">
+                        <GradientStop Offset="0" Color="#FFFFD000" />
+                        <GradientStop Offset="0.50" Color="#FFD11010" />
+                        <GradientStop Offset="1" Color="#DE290B" />
+                    </telerik:ValueGradientColorizer>
+                </telerik:TypeDefinition.Mappings>
+            </telerik:TypeDefinition>
+        </telerik:RadTreeMap.TypeDefinitions>
+    </telerik:RadTreeMap>
+    
+</Window>
