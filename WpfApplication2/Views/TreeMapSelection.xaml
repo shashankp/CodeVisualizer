@@ -7,28 +7,36 @@
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <telerik:RadTreeMap x:Name="treeMap1"
+
+    <UserControl.Resources>
+        <SolidColorBrush Color="#FFE10000" x:Key="HighPriority" />
+        <SolidColorBrush Color="#FF0C6BBF" x:Key="MedPriority" />
+        <SolidColorBrush Color="YellowGreen" x:Key="LowPriority" />
+
+        <telerik:RangeBrushCollection x:Key="ColorizerBrushes">
+            <telerik:RangeBrush Brush="{StaticResource LowPriority}" From="0" To="2" />
+            <telerik:RangeBrush Brush="{StaticResource MedPriority}" From="3" To="5" />
+            <telerik:RangeBrush Brush="{StaticResource HighPriority}" From="6" To="100"  />
+        </telerik:RangeBrushCollection>
+    </UserControl.Resources>
+
+    <telerik:RadTreeMap x:Name="treeMap1"
 						ItemsSource="{Binding}"
 						LayoutStrategy="Squarified"
 						BorderThickness="1"
 						BorderBrush="#FF5F031C">
-            <telerik:RadTreeMap.TypeDefinitions>
-                <!--TODO: ToolTipTemplate with name & score-->
-                <telerik:TypeDefinition TargetTypeName="TfsItem"
+        <telerik:RadTreeMap.TypeDefinitions>
+            <telerik:TypeDefinition TargetTypeName="TfsItemViewModel"
 									ValuePath="Size"
 									LabelPath="Name"
-									ToolTipPath="Score"
+									ToolTipPath="BugCount"
                                     ToolTipFormat="Score: {0}">
-                    <telerik:TypeDefinition.Mappings>
-                        <telerik:ValueGradientColorizer RangeMinimum="0" RangeMaximum="100">
-                            <GradientStop Offset="0" Color="#FFFFD000" />
-                            <GradientStop Offset="0.50" Color="#FFD11010" />
-                            <GradientStop Offset="1" Color="#DE290B" />
-                        </telerik:ValueGradientColorizer>
-                    </telerik:TypeDefinition.Mappings>
-                </telerik:TypeDefinition>
-            </telerik:RadTreeMap.TypeDefinitions>
-        </telerik:RadTreeMap>
-    </Grid>
+                <telerik:TypeDefinition.Mappings>
+                    <telerik:ValueBrushColorizer IsAbsolute="True" ValuePath="BugCount"
+                                                     RangeMinimum="0" RangeMaximum="100"
+                                                     Brushes="{StaticResource ColorizerBrushes}" />
+                </telerik:TypeDefinition.Mappings>
+            </telerik:TypeDefinition>
+        </telerik:RadTreeMap.TypeDefinitions>
+    </telerik:RadTreeMap>
 </UserControl>

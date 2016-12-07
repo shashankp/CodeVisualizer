@@ -27,23 +27,6 @@ namespace WpfApplication2
         public MainWindow()
         {
             InitializeComponent();
-            var data = TfsHelper.GetData(@"C:\tfs\Dev\Concert\Web\TRTA.Concert.EmulateProductService\TRTA.Concert.EmulateProductService\Controllers",
-                @"$/WorkflowTools/Dev/Concert/Web/TRTA.Concert.EmulateProductService/TRTA.Concert.EmulateProductService/Controllers");
-            this.DataContext = data;
         }
-
-        //private void Button1_OnClick(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        var data = TfsHelper.GetData(tbSolutionPath.Text, tbTfsPath.Text);
-        //        dataGrid.ItemsSource = data;
-        //        treeMap1.ItemsSource = data;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //    }
-        //}
     }
 }

@@ -13,6 +13,10 @@ namespace WpfApplication2
 {
     public static class TfsHelper
     {
+        private static string _slnPath;
+        private static string _tfsPath;
+        private static List<TfsItemViewModel> data = new List<TfsItemViewModel>(); 
+
         private static string baseUrl =
             "http://tfstta.int.thomson.com:8080/tfs/DefaultCollection/_apis/tfvc/changesets?searchCriteria.itemPath=";
 
@@ -39,8 +43,11 @@ namespace WpfApplication2
             return null;
         }
 
-        public static List<TfsItemViewModel> GetData(string slnPath, string tfsPath)
+        public static List<TfsItemViewModel> SetPathParams(string slnPath, string tfsPath)
         {
+            _slnPath = slnPath;
+            _tfsPath = tfsPath;
+
             var files = new List<string>();
             if (Directory.Exists(slnPath))
             {
@@ -52,14 +59,14 @@ namespace WpfApplication2
                 files.Add(slnPath);
             }
 
-            var tfsItems = new List<TfsItemViewModel>();
+            data.Clear();
             Parallel.ForEach(files, file =>
             {
                 var tfsFile = tfsPath + file.Replace(slnPath, "").Replace(@"\", "/");
                 var result = TfsHelper.GetItemHistory(tfsFile);
                 if (result != null)
                 {
-                    tfsItems.Add(new TfsItemViewModel()
+                    data.Add(new TfsItemViewModel()
                     {
                         FullPath = file,
                         Name = Path.GetFileName(file),
@@ -69,7 +76,13 @@ namespace WpfApplication2
                     });
                 }
             });
-            return tfsItems;
+
+            return data;
+        }
+
+        public static List<TfsItemViewModel> GetData()
+        {
+            return data;
         }
     }
 }

@@ -24,26 +24,7 @@ namespace WpfApplication2
         public TreeMapSelection()
         {
             InitializeComponent();
-            this.DataContext = GetData();
-        }
-
-        private List<TfsItemViewModel> GetData()
-        {
-            return new List<TfsItemViewModel>()
-            {
-                new TfsItemViewModel()
-                {
-                    Name = "File1.cs",
-                    Score = 10,
-                    Size = 100
-                },
-                new TfsItemViewModel()
-                {
-                    Name = "File2.cs",
-                    Score = 10,
-                    Size = 50
-                }
-            };
+            this.DataContext = TfsHelper.GetData();
         }
     }
 }

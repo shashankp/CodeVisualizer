@@ -72,6 +72,9 @@
     <Compile Include="Views\TreeMapSelection.xaml.cs">
       <DependentUpon>TreeMapSelection.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TreeMapSettings.xaml.cs">
+      <DependentUpon>TreeMapSettings.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -85,6 +88,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\TreeMapSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TreeMapSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
