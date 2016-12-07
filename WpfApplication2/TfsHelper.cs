@@ -43,6 +43,73 @@ namespace WpfApplication2
             return null;
         }
 
+        public static Changeset GetChangesetWithLinks(Changeset changeset)
+        {
+            try
+            {
+                var url = new Uri(changeset.Url);
+                //Use Windows credentials
+                using (var httpClient = new HttpClient(new HttpClientHandler
+                {
+                    UseDefaultCredentials = true
+                }))
+                {
+                    var result = httpClient.GetStringAsync(url).Result;
+                    var changesetWithLinks = JsonConvert.DeserializeObject<Changeset>(result);
+                    return changesetWithLinks;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return null;
+        }
+
+        public static int GetBugCount(ItemHistory itemHistory)
+        {
+            int bugCount = 0;
+            try
+            {
+
+                Parallel.ForEach(itemHistory.Value, changeset =>
+                {
+                    {
+                        Changeset cs = GetChangesetWithLinks(changeset);
+
+                        var url = cs._Links.WorkItems.href;
+                        using (var httpClient = new HttpClient(new HttpClientHandler
+                        {
+                            UseDefaultCredentials = true
+                        }))
+                        {
+                            var result = httpClient.GetStringAsync(url).Result;
+                            var associatedWorkItems = JsonConvert.DeserializeObject<AssociatedWorkItems>(result);
+
+                            foreach (WorkItem workitem in associatedWorkItems.Value)
+                            {
+                                if (workitem.WorkItemtype == "Bug")
+                                {
+                                    bugCount += 1;
+                                }
+                            }
+
+                        }
+                    }
+
+                });
+               
+               
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return bugCount;
+
+        }
+
         public static List<TfsItemViewModel> SetPathParams(string slnPath, string tfsPath)
         {
             _slnPath = slnPath;
@@ -70,7 +137,7 @@ namespace WpfApplication2
                     {
                         FullPath = file,
                         Name = Path.GetFileName(file),
-                        BugCount = Convert.ToInt32(result.Count),
+                        BugCount = GetBugCount(result),
                         Score = 10,
                         Size = new FileInfo(file).Length
                     });
