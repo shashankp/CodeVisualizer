@@ -13,5 +13,6 @@ namespace WpfApplication2.Models
         public int Score { get; set; }
         public int BugCount { get; set; }
         public string FullPath { get; set; }
+        public string TFSPath { get; set; }
     }
 }
