@@ -14,5 +14,6 @@ namespace WpfApplication2.Models
         public int BugCount { get; set; }
         public string FullPath { get; set; }
         public string TFSPath { get; set; }
+
     }
 }
