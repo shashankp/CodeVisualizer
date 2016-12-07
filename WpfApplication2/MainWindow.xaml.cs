@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -32,17 +33,18 @@ namespace WpfApplication2
         {
             try
             {
-                var url = new Uri(textBox.Text);
-                //Use Windows credentials
-                using (var httpClient = new HttpClient(new HttpClientHandler
+                var files = new List<string>();
+                if (Directory.Exists(tbSolutionPath.Text))
                 {
-                    UseDefaultCredentials = true
-                }))
+                    files = Directory.GetFiles(tbSolutionPath.Text).ToList();
+                } else if (File.Exists(tbSolutionPath.Text))
                 {
-                    var result = httpClient.GetStringAsync(url).Result;
-                    var j = JObject.Parse(result);
-                    Console.WriteLine(j);
+                    files.Add(tbSolutionPath.Text);
                 }
+
+                var resultText = TfsHelper.GetHistory(files);
+                
+                tbResult.Text = resultText;
             }
             catch (Exception ex)
             {
