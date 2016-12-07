@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace WpfApplication2.Models
 {
-    public class Changeset
+    public class AssociatedWorkItems
     {
-        public string ChangesetId { get; set; }
-        public string Url { get; set; }
-        public Links _Links { get; set; }
+        public int Count { get; set; }
+
+        public List<WorkItem> Value { get; set; }
     }
 }

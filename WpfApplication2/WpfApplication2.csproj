@@ -65,9 +65,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\AssociatedWorkItems.cs" />
     <Compile Include="Models\Changeset.cs" />
     <Compile Include="Models\ItemHistory.cs" />
+    <Compile Include="Models\Links.cs" />
     <Compile Include="Models\TfsItemViewModel.cs" />
+    <Compile Include="Models\WorkItem.cs" />
+    <Compile Include="Models\WorkItemsLink.cs" />
+    <Compile Include="Models\WorkItemType.cs" />
     <Compile Include="TfsHelper.cs" />
     <Compile Include="Views\TreeMapSelection.xaml.cs">
       <DependentUpon>TreeMapSelection.xaml</DependentUpon>
