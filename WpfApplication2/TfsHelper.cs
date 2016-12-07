@@ -13,7 +13,7 @@ namespace WpfApplication2
 {
     public static class TfsHelper
     {
-        private static string _slnPath;
+        private static string _projPath;
         private static string _tfsPath;
         private static List<TfsItemViewModel> data = new List<TfsItemViewModel>(); 
 
@@ -68,6 +68,8 @@ namespace WpfApplication2
 
         public static int GetBugCount(ItemHistory itemHistory)
         {
+            //TODO: making many api calls
+            return Convert.ToInt32(itemHistory.Count);
             int bugCount = 0;
             try
             {
@@ -83,17 +85,22 @@ namespace WpfApplication2
                             UseDefaultCredentials = true
                         }))
                         {
-                            var result = httpClient.GetStringAsync(url).Result;
-                            var associatedWorkItems = JsonConvert.DeserializeObject<AssociatedWorkItems>(result);
-
-                            foreach (WorkItem workitem in associatedWorkItems.Value)
+                            try
                             {
-                                if (workitem.WorkItemtype == "Bug")
+                                var result = httpClient.GetStringAsync(url).Result;
+                                var associatedWorkItems = JsonConvert.DeserializeObject<AssociatedWorkItems>(result);
+
+                                foreach (WorkItem workitem in associatedWorkItems.Value)
                                 {
-                                    bugCount += 1;
+                                    if (workitem.WorkItemtype == "Bug")
+                                    {
+                                        bugCount += 1;
+                                    }
                                 }
                             }
-
+                            catch (AggregateException)
+                            {
+                            }
                         }
                     }
 
@@ -110,28 +117,23 @@ namespace WpfApplication2
 
         }
 
-        public static List<TfsItemViewModel> SetPathParams(string slnPath, string tfsPath)
+        public static List<TfsItemViewModel> SetPathParams(string projPath, string tfsPath)
         {
-            _slnPath = slnPath;
+            _projPath = projPath;
             _tfsPath = tfsPath;
 
             var files = new List<string>();
-            if (Directory.Exists(slnPath))
+            if (Directory.Exists(projPath))
             {
                 //TODO: limited file types to cs
-                files = Directory.GetFiles(Path.GetDirectoryName(slnPath), "*.cs", SearchOption.AllDirectories).ToList();
-            }
-
-            if (File.Exists(slnPath))
-            {
-                //files.Add(slnPath);
-                GenerateCodeMetrics(slnPath);
+                files = Directory.GetFiles(projPath, "*.cs", SearchOption.AllDirectories).ToList();
+                //files = Directory.GetFiles(Path.GetDirectoryName(projPath), "*.cs", SearchOption.AllDirectories).ToList();
             }
 
             data.Clear();
             Parallel.ForEach(files, file =>
             {
-                var tfsFile = tfsPath + file.Replace(slnPath, "").Replace(@"\", "/");
+                var tfsFile = tfsPath + file.Replace(projPath, "").Replace(@"\", "/");
                 var result = TfsHelper.GetItemHistory(tfsFile);
                 if (result != null)
                 {
@@ -139,8 +141,8 @@ namespace WpfApplication2
                     {
                         FullPath = file,
                         Name = Path.GetFileName(file),
-                        BugCount = GetBugCount(result),
-                        Score = 10,
+                        BugCount = GetBugCount(result),                        
+                        Score = GetCodeMetricsScore(file),
                         Size = new FileInfo(file).Length
                     });
                 }
@@ -149,9 +151,10 @@ namespace WpfApplication2
             return data;
         }
 
-        private static void GenerateCodeMetrics(string slnPath)
+        private static int GetCodeMetricsScore(string file)
         {
-
+            //TODO: 
+            return 10;
         }
 
         public static List<TfsItemViewModel> GetData()

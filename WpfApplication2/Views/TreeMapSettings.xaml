@@ -9,11 +9,10 @@
     <Grid>
         <StackPanel>
             <Label x:Name="label" Content="TFS path" HorizontalAlignment="Left" VerticalAlignment="Top" Width="184"/>
-            <TextBox x:Name="tbTfsPath" HorizontalAlignment="Left" Height="33" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" Text="$/WorkflowTools/Dev/WorkflowManager 2.0/Release9/TR.WorkflowTools.WorkFlowManagerObjects/Entities"/>
+            <TextBox x:Name="tbTfsPath" HorizontalAlignment="Left" Height="33" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" Text="$/WorkflowTools/Dev/Concert/Web/TRTA.Concert.EmulateProductService/TRTA.Concert.EmulateProductService/Controllers"/>
 
             <Label x:Name="label1" Content="Disk path" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="-0.417,0.698" Width="71"/>
-            <TextBox x:Name="tbSolutionPath" HorizontalAlignment="Left" Height="36" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" Text="C:\tfs\WorkflowTools\Dev\WorkflowManager 2.0\Release9\TR.WorkflowTools.WorkFlowManagerObjects\Entities"/>
-
+            <TextBox x:Name="tbSolutionPath" HorizontalAlignment="Left" Height="36" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" Text="C:\tfs\Dev\Concert\Web\TRTA.Concert.EmulateProductService\TRTA.Concert.EmulateProductService\Controllers"/>
             <Button x:Name="button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Content="Get" Click="Button1_OnClick">
             </Button>
 

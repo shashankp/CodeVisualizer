@@ -41,7 +41,7 @@ namespace WpfApplication2.Views
                 pbStatus.Visibility = Visibility.Visible;
                 worker.RunWorkerAsync(new
                 {
-                    SlnPath = tbSolutionPath.Text,
+                    ProjPath = tbSolutionPath.Text,
                     TfsPath = tbTfsPath.Text
                 });
             }
@@ -54,7 +54,7 @@ namespace WpfApplication2.Views
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             // run all background tasks here
-            data = TfsHelper.SetPathParams(((dynamic)(e.Argument)).SlnPath, 
+            data = TfsHelper.SetPathParams(((dynamic)(e.Argument)).ProjPath, 
                                             ((dynamic)(e.Argument)).TfsPath);
         }
 
