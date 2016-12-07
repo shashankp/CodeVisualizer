@@ -28,6 +28,8 @@ namespace WpfApplication2.Views
         public TreeMapSettings()
         {
             InitializeComponent();
+
+            pbStatus.Visibility = Visibility.Hidden;
             worker.DoWork += worker_DoWork;
             worker.RunWorkerCompleted += worker_RunWorkerCompleted;
         }
@@ -36,6 +38,7 @@ namespace WpfApplication2.Views
         {
             try
             {
+                pbStatus.Visibility = Visibility.Visible;
                 worker.RunWorkerAsync(new
                 {
                     SlnPath = tbSolutionPath.Text,
@@ -59,6 +62,7 @@ namespace WpfApplication2.Views
                                        RunWorkerCompletedEventArgs e)
         {
             //update ui once worker complete his work
+            pbStatus.Visibility = Visibility.Hidden;
             dataGrid.ItemsSource = data;
         }
 

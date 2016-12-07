@@ -17,6 +17,8 @@
             <Button x:Name="button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Content="Get" Click="Button1_OnClick">
             </Button>
 
+            <ProgressBar Minimum="0" Maximum="100" Name="pbStatus" IsIndeterminate="True" Height="10" />
+            
             <ScrollViewer>
                 <DataGrid x:Name="dataGrid" />
             </ScrollViewer>
