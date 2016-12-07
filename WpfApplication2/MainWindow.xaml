@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfApplication2"
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="625">
-    <StackPanel>
+    <!--<StackPanel>
         <Label x:Name="label" Content="TFS path" HorizontalAlignment="Left" VerticalAlignment="Top" Width="184"/>
         <TextBox x:Name="tbTfsPath" HorizontalAlignment="Left" Height="33" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" Text="$/WorkflowTools/Dev/Concert/Web/TRTA.Concert.EmulateProductService/TRTA.Concert.EmulateProductService/Controllers"/>
 
@@ -19,6 +19,39 @@
         <ScrollViewer>
             <DataGrid x:Name="dataGrid" />
         </ScrollViewer>
-        <!--<local:TreeMapSelection />-->
-    </StackPanel>
+        --><!--<local:TreeMapSelection />--><!--
+        
+    </StackPanel>-->
+    <Window.Resources>
+        <SolidColorBrush Color="#FFE10000" x:Key="HighPriority" />
+        <SolidColorBrush Color="#FF0C6BBF" x:Key="MedPriority" />
+        <SolidColorBrush Color="YellowGreen" x:Key="LowPriority" />
+        
+        <telerik:RangeBrushCollection x:Key="ColorizerBrushes">
+            <telerik:RangeBrush Brush="{StaticResource LowPriority}" From="0" To="2" />
+            <telerik:RangeBrush Brush="{StaticResource MedPriority}" From="3" To="5" />
+            <telerik:RangeBrush Brush="{StaticResource HighPriority}" From="6" To="100"  />
+        </telerik:RangeBrushCollection>
+    </Window.Resources>
+    
+            <telerik:RadTreeMap x:Name="treeMap1"
+						ItemsSource="{Binding}"
+						LayoutStrategy="Squarified"
+						BorderThickness="1"
+						BorderBrush="#FF5F031C">
+        <telerik:RadTreeMap.TypeDefinitions>
+            <!--TODO: ToolTipTemplate with name & score-->
+            <telerik:TypeDefinition TargetTypeName="TfsItemViewModel"
+									ValuePath="Size"
+									LabelPath="Name"
+									ToolTipPath="BugCount"
+                                    ToolTipFormat="Score: {0}">
+                <telerik:TypeDefinition.Mappings>
+                    <telerik:ValueBrushColorizer IsAbsolute="True" ValuePath="BugCount"
+                                                     RangeMinimum="0" RangeMaximum="100"
+                                                     Brushes="{StaticResource ColorizerBrushes}" />
+                </telerik:TypeDefinition.Mappings>
+            </telerik:TypeDefinition>
+        </telerik:RadTreeMap.TypeDefinitions>
+    </telerik:RadTreeMap>
 </Window>

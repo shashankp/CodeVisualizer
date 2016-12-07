@@ -16,7 +16,7 @@
             <telerik:RadTreeMap.TypeDefinitions>
                 <!--TODO: ToolTipTemplate with name & score-->
                 <telerik:TypeDefinition TargetTypeName="TfsItem"
-									ValuePath="Score"
+									ValuePath="Size"
 									LabelPath="Name"
 									ToolTipPath="Score"
                                     ToolTipFormat="Score: {0}">
