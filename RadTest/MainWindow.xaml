@@ -6,26 +6,29 @@
         xmlns:local="clr-namespace:RadTest"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <telerik:RadTreeMap x:Name="treeMap1"
+    <StackPanel>
+        
+        <telerik:RadTreeMap x:Name="treeMap1"
 						ItemsSource="{Binding}"
 						LayoutStrategy="Squarified"
 						BorderThickness="1"
 						BorderBrush="#FF5F031C">
-        <telerik:RadTreeMap.TypeDefinitions>
-            <!--TODO: ToolTipTemplate with name & score-->
-            <telerik:TypeDefinition TargetTypeName="TfsItem"
+            <telerik:RadTreeMap.TypeDefinitions>
+                <!--TODO: ToolTipTemplate with name & score-->
+                <telerik:TypeDefinition TargetTypeName="TfsItem"
 									ValuePath="Score"
 									LabelPath="Name"
 									ToolTipPath="Score"
                                     ToolTipFormat="Score: {0}">
-                <telerik:TypeDefinition.Mappings>
-                    <telerik:ValueGradientColorizer RangeMinimum="0" RangeMaximum="100">
-                        <GradientStop Offset="0" Color="#FFFFD000" />
-                        <GradientStop Offset="0.50" Color="#FFD11010" />
-                        <GradientStop Offset="1" Color="#DE290B" />
-                    </telerik:ValueGradientColorizer>
-                </telerik:TypeDefinition.Mappings>
-            </telerik:TypeDefinition>
-        </telerik:RadTreeMap.TypeDefinitions>
-    </telerik:RadTreeMap>
+                    <telerik:TypeDefinition.Mappings>
+                        <telerik:ValueGradientColorizer RangeMinimum="0" RangeMaximum="100">
+                            <GradientStop Offset="0" Color="#FFFFD000" />
+                            <GradientStop Offset="0.50" Color="#FFD11010" />
+                            <GradientStop Offset="1" Color="#DE290B" />
+                        </telerik:ValueGradientColorizer>
+                    </telerik:TypeDefinition.Mappings>
+                </telerik:TypeDefinition>
+            </telerik:RadTreeMap.TypeDefinitions>
+        </telerik:RadTreeMap>
+    </StackPanel>
 </Window>

@@ -28,7 +28,6 @@ namespace WpfApplication2
                 }))
                 {
                     var result = httpClient.GetStringAsync(url).Result;
-                    //var j = JObject.Parse(result);
                     var itemHistory = JsonConvert.DeserializeObject<ItemHistory>(result);
                     return itemHistory;
                 }
@@ -40,21 +39,37 @@ namespace WpfApplication2
             return null;
         }
 
-        public static string GetMapping(string file)
+        public static List<TfsItemViewModel> GetData(string slnPath, string tfsPath)
         {
-            return file.Replace(@"C:\tfs\Dev\", @"$/WorkflowTools/Dev/").Replace(@"\", "/");
-        }
+            var files = new List<string>();
+            if (Directory.Exists(slnPath))
+            {
+                //TODO: limited file types to cs
+                files = Directory.GetFiles(slnPath, "*.cs", SearchOption.AllDirectories).ToList();
+            }
+            else if (File.Exists(slnPath))
+            {
+                files.Add(slnPath);
+            }
 
-        public static string GetHistory(List<string> files)
-        {
-            var resultText = "";
+            var tfsItems = new List<TfsItemViewModel>();
             Parallel.ForEach(files, file =>
             {
-                var tfsFile = TfsHelper.GetMapping(file);
+                var tfsFile = tfsPath + file.Replace(slnPath, "").Replace(@"\", "/");
                 var result = TfsHelper.GetItemHistory(tfsFile);
-                resultText += Path.GetFileName(file) + ", " + result.Count + Environment.NewLine;
+                if (result != null)
+                {
+                    tfsItems.Add(new TfsItemViewModel()
+                    {
+                        FullPath = file,
+                        Name = Path.GetFileName(file),
+                        BugCount = Convert.ToInt32(result.Count),
+                        Score = 10,
+                        Size = new FileInfo(file).Length
+                    });
+                }
             });
-            return resultText;
+            return tfsItems;
         }
     }
 }

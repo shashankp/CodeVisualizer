@@ -60,6 +60,7 @@
     </ApplicationDefinition>
     <Compile Include="Models\Changeset.cs" />
     <Compile Include="Models\ItemHistory.cs" />
+    <Compile Include="Models\TfsItemViewModel.cs" />
     <Compile Include="TfsHelper.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
