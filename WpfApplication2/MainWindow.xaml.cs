@@ -33,13 +33,14 @@ namespace WpfApplication2
         {
             try
             {
+                var inputPath = tbSolutionPath.Text;
                 var files = new List<string>();
-                if (Directory.Exists(tbSolutionPath.Text))
+                if (Directory.Exists(inputPath))
                 {
-                    files = Directory.GetFiles(tbSolutionPath.Text).ToList();
-                } else if (File.Exists(tbSolutionPath.Text))
+                    files = Directory.GetFiles(inputPath).ToList();
+                } else if (File.Exists(inputPath))
                 {
-                    files.Add(tbSolutionPath.Text);
+                    files.Add(inputPath);
                 }
 
                 var resultText = TfsHelper.GetHistory(files);

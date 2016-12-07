@@ -48,7 +48,7 @@ namespace WpfApplication2
         public static string GetHistory(List<string> files)
         {
             var resultText = "";
-            Parallel.ForEach(files, (file) =>
+            Parallel.ForEach(files, file =>
             {
                 var tfsFile = TfsHelper.GetMapping(file);
                 var result = TfsHelper.GetItemHistory(tfsFile);

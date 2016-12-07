@@ -12,12 +12,14 @@
 						BorderThickness="1"
 						BorderBrush="#FF5F031C">
         <telerik:RadTreeMap.TypeDefinitions>
+            <!--TODO: ToolTipTemplate with name & score-->
             <telerik:TypeDefinition TargetTypeName="TfsItem"
 									ValuePath="Score"
 									LabelPath="Name"
-									ToolTipPath="Name">
+									ToolTipPath="Score"
+                                    ToolTipFormat="Score: {0}">
                 <telerik:TypeDefinition.Mappings>
-                    <telerik:ValueGradientColorizer RangeMinimum="318" RangeMaximum="5310">
+                    <telerik:ValueGradientColorizer RangeMinimum="0" RangeMaximum="100">
                         <GradientStop Offset="0" Color="#FFFFD000" />
                         <GradientStop Offset="0.50" Color="#FFD11010" />
                         <GradientStop Offset="1" Color="#DE290B" />
@@ -26,5 +28,4 @@
             </telerik:TypeDefinition>
         </telerik:RadTreeMap.TypeDefinitions>
     </telerik:RadTreeMap>
-    
 </Window>

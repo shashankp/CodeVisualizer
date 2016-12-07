@@ -6,13 +6,18 @@
         xmlns:local="clr-namespace:WpfApplication2"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-        <Grid>
-        <TextBox x:Name="tbTfsPath" HorizontalAlignment="Left" Height="33" Margin="92,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="396"/>
-        <Button x:Name="button" HorizontalAlignment="Left" Margin="92,174,0,0" VerticalAlignment="Top" Width="75" Content="Get" Click="Button1_OnClick">
+    <StackPanel>
+        <Label x:Name="label" Content="TFS path" HorizontalAlignment="Left" VerticalAlignment="Top" Width="184"/>
+        <TextBox x:Name="tbTfsPath" HorizontalAlignment="Left" Height="33" TextWrapping="Wrap" VerticalAlignment="Top" Width="396"/>
+
+        <Label x:Name="label1" Content="Disk path" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="-0.417,0.698" Width="71"/>
+        <TextBox x:Name="tbSolutionPath" HorizontalAlignment="Left" Height="36" TextWrapping="Wrap" VerticalAlignment="Top" Width="396"/>
+
+        <Button x:Name="button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Content="Get" Click="Button1_OnClick">
         </Button>
-        <TextBox x:Name="tbSolutionPath" HorizontalAlignment="Left" Height="36" Margin="92,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="396"/>
-        <Label x:Name="label" Content="Solution path" HorizontalAlignment="Left" Margin="92,22,0,0" VerticalAlignment="Top" Width="184"/>
-        <Label x:Name="label1" Content="TFS path" HorizontalAlignment="Left" Margin="92,94,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.417,0.698" Width="71"/>
-            <TextBlock x:Name="tbResult" HorizontalAlignment="Left" Margin="92,219,0,0" VerticalAlignment="Top" Height="73" Width="396"/>
-    </Grid>
+
+        <ScrollViewer>
+            <TextBlock x:Name="tbResult" HorizontalAlignment="Left" VerticalAlignment="Top" Width="396"/>
+        </ScrollViewer>
+    </StackPanel>
 </Window>
