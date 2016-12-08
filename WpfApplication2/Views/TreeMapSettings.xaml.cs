@@ -41,7 +41,7 @@ namespace WpfApplication2.Views
                 pbStatus.Visibility = Visibility.Visible;
                 worker.RunWorkerAsync(new
                 {
-                    ProjPath = tbSolutionPath.Text,
+                    ProjPath = tbProjPath.Text,
                     TfsPath = tbTfsPath.Text
                 });
             }

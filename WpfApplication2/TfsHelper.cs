@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -123,6 +124,12 @@ namespace WpfApplication2
             _tfsPath = tfsPath;
 
             var files = new List<string>();
+
+            if (File.Exists(projPath) && projPath.EndsWith(".csproj"))
+            {
+                GenerateCodeMetrics(projPath);
+            }
+
             if (Directory.Exists(projPath))
             {
                 //TODO: limited file types to cs
@@ -154,7 +161,15 @@ namespace WpfApplication2
         private static int GetCodeMetricsScore(string file)
         {
             //TODO: 
-            return 10;
+            var r = new Random();
+            return r.Next(50,90);
+        }
+
+        private static void GenerateCodeMetrics(string projFile)
+        {
+            return;
+            var s = @"""C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\FxCop\metrics.exe"" /out:temp.xml /file:""" + projFile + @"""";
+            Process.Start("CMD.exe", s);
         }
 
         public static List<TfsItemViewModel> GetData()

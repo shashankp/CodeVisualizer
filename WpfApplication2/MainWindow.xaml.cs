@@ -28,5 +28,21 @@ namespace WpfApplication2
         {
             InitializeComponent();
         }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.Source is TabControl)
+            {
+                //TODO: bug if viz tab is selected first
+                //var tabitem = e.AddedItems[0] as TabItem;
+                //if (tabitem == null) return;
+
+                //var t = tabitem.Content as TreeMapSelection;
+                //if (t == null) return;
+
+                //t.DataContext = TfsHelper.GetData();
+                //tabitem.UpdateLayout();
+            }
+        }
     }
 }
