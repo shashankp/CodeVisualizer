@@ -21,10 +21,13 @@ namespace WpfApplication2
     /// </summary>
     public partial class TreeMapSelection : UserControl
     {
+        private List<TfsItemViewModel> SubItems;
+         
         public TreeMapSelection()
         {
             InitializeComponent();
             this.DataContext = TfsHelper.GetData();
+            SubItems = TfsHelper.GetData();
         }
     }
 }

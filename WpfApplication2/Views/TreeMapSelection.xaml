@@ -4,67 +4,65 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfApplication2"
-             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:l="clr-namespace:TreeMaps.Controls;assembly=TreeMaps"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
     <UserControl.Resources>
-        <SolidColorBrush Color="#FFE10000" x:Key="HighPriority" />
+        <!--<SolidColorBrush Color="#FFE10000" x:Key="HighPriority" />
         <SolidColorBrush Color="#FFFFE100" x:Key="MedPriority" />
-        <SolidColorBrush Color="#FF0C6BBF" x:Key="LowPriority" />
+        <SolidColorBrush Color="#FF0C6BBF" x:Key="LowPriority" />-->
 
-        <telerik:RangeBrushCollection x:Key="ColorizerBrushes">
-            <telerik:RangeBrush Brush="{StaticResource LowPriority}" From="0" To="2" />
-            <telerik:RangeBrush Brush="{StaticResource MedPriority}" From="3" To="5" />
-            <telerik:RangeBrush Brush="{StaticResource HighPriority}" From="6" To="100"  />
-        </telerik:RangeBrushCollection>
+        <HierarchicalDataTemplate x:Key="ItemDataTemplate" ItemsSource="{Binding Path=SubItems}">
+            <Border Background="Transparent">
+                <Border.ToolTip>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="{Binding Path=Name}" Margin="0,0,0,2"/>
+                        <!--<Label>Score:</Label>-->
+                        <TextBlock Text="{Binding Path=Score}" />
+                        <TextBlock Text="{Binding Path=BugCount}" />
+                    </StackPanel>
+                </Border.ToolTip>
+                <Grid/>
+            </Border>
+        </HierarchicalDataTemplate>
 
-        <DataTemplate x:Key="ToolTipTemplate">
-            <Grid>
-                <Rectangle Stroke="#828282" RadiusX="4" RadiusY="4" Fill="#F5F5F5"/>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Orientation="Horizontal">
-                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap"  FontWeight="Bold" />
-                </StackPanel>
-                <StackPanel Grid.Row="1" Orientation="Horizontal">
-                    <TextBlock Text="Score: " />
-                    <TextBlock Text="{Binding Score}" TextWrapping="Wrap" />
-                </StackPanel>
-                <StackPanel Grid.Row="2" Orientation="Horizontal">
-                    <TextBlock Text="BugCount: " />
-                    <TextBlock Text="{Binding BugCount}" />
-                </StackPanel>
-                </Grid>
-            </Grid>
-        </DataTemplate>
+        <Style TargetType="{x:Type l:TreeMapItem}">
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <!--<SolidColorBrush Color=""></SolidColorBrush>-->
+                    <RadialGradientBrush
+              GradientOrigin="0.2,0.2"
+              Center="0.2,0.2" RadiusX="1" RadiusY="1">
+                        <RadialGradientBrush.GradientStops>
+                            <GradientStop Color="White" Offset="0" />
+                            <GradientStop Color="LightGray" Offset="0.1" />
+                            <GradientStop Color="Black" Offset="1" />
+                        </RadialGradientBrush.GradientStops>
+                    </RadialGradientBrush>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="Opacity" Value=".75"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="BorderBrush" Value="Red"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
-    
-    <telerik:RadTreeMap x:Name="treeMap1"
-						ItemsSource="{Binding}"
-						LayoutStrategy="Squarified"
-						BorderThickness="1"
-						BorderBrush="#FF5F031C">
-        <telerik:RadTreeMap.TypeDefinitions>
-            <telerik:TypeDefinition TargetTypeName="TfsItemViewModel"
-									ValuePath="Size"
-									LabelPath="Name"
-                                    ToolTipTemplate="{StaticResource ToolTipTemplate}">
-                <telerik:TypeDefinition.Mappings>
-                    <!--<telerik:ValueGradientColorizer RangeMinimum="0" RangeMaximum="20" ValuePath="BugCount">
-                        <GradientStop Offset="0" Color="#FFFFD000" />
-                        <GradientStop Offset="0.50" Color="#FFD11010" />
-                        <GradientStop Offset="1" Color="#de290b" />
-                    </telerik:ValueGradientColorizer>-->
-                    <telerik:ValueBrushColorizer IsAbsolute="True" ValuePath="BugCount"
-                                                     RangeMinimum="0" RangeMaximum="100"
-                                                     Brushes="{StaticResource ColorizerBrushes}" />
-                </telerik:TypeDefinition.Mappings>
-            </telerik:TypeDefinition>
-        </telerik:RadTreeMap.TypeDefinitions>
-    </telerik:RadTreeMap>
+
+    <l:TreeMaps
+      Grid.Row="2"
+      x:Name="_tree"
+      ItemsSource="{Binding}"
+      ItemTemplate="{StaticResource ItemDataTemplate}"
+      ValuePropertyName="Size"
+      TreeMapMode="Squarified"
+      />
+
 </UserControl>
