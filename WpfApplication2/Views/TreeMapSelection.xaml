@@ -9,55 +9,55 @@
              d:DesignHeight="300" d:DesignWidth="300">
 
     <UserControl.Resources>
-        <!--<SolidColorBrush Color="#FFE10000" x:Key="HighPriority" />
-        <SolidColorBrush Color="#FFFFE100" x:Key="MedPriority" />
-        <SolidColorBrush Color="#FF0C6BBF" x:Key="LowPriority" />-->
-
+        
         <HierarchicalDataTemplate x:Key="ItemDataTemplate" ItemsSource="{Binding Path=SubItems}">
-            <Border Background="Transparent">
+            <Border Background="Transparent" BorderBrush="Black" BorderThickness="1">
                 <Border.ToolTip>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{Binding Path=Name}" Margin="0,0,0,2"/>
-                        <!--<Label>Score:</Label>-->
-                        <TextBlock Text="{Binding Path=Score}" />
-                        <TextBlock Text="{Binding Path=BugCount}" />
-                    </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{Binding Path=Name}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Score: "/>
+                        <TextBlock Text="{Binding Path=Score}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="BugCount: "/>
+                        <TextBlock Text="{Binding Path=BugCount}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left"/>
+                    </Grid>
                 </Border.ToolTip>
-                <Grid/>
+                
+                <Grid Margin="2">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Path=Name}"></TextBlock>
+                    </StackPanel>
+                </Grid>
             </Border>
         </HierarchicalDataTemplate>
+
+        <local:ScoreToColorConverter x:Key="ScoreToColorConverter"></local:ScoreToColorConverter>
 
         <Style TargetType="{x:Type l:TreeMapItem}">
             <Setter Property="Padding" Value="0"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Background">
-                <Setter.Value>
-                    <!--<SolidColorBrush Color=""></SolidColorBrush>-->
-                    <RadialGradientBrush
-              GradientOrigin="0.2,0.2"
-              Center="0.2,0.2" RadiusX="1" RadiusY="1">
-                        <RadialGradientBrush.GradientStops>
-                            <GradientStop Color="White" Offset="0" />
-                            <GradientStop Color="LightGray" Offset="0.1" />
-                            <GradientStop Color="Black" Offset="1" />
-                        </RadialGradientBrush.GradientStops>
-                    </RadialGradientBrush>
-                </Setter.Value>
-            </Setter>
+            <Setter Property="Background" Value="{Binding Converter={StaticResource ScoreToColorConverter}}" />
 
             <Setter Property="Opacity" Value=".75"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property="BorderBrush" Value="Red"/>
-                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="2"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
 
     <l:TreeMaps
-      Grid.Row="2"
       x:Name="_tree"
       ItemsSource="{Binding}"
       ItemTemplate="{StaticResource ItemDataTemplate}"
